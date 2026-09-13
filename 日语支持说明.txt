@@ -1,0 +1,19 @@
+日语支持改造说明
+
+新增：
+- assets/ja-i18n.js：日语界面翻译与浏览器缓存
+- api/translate-ja.js：Vercel Serverless 日语翻译接口
+- api/deepseek-chat.js：Vercel Serverless DeepSeek 对话接口
+- add_japanese.py：对原始静态构建包进行可重复补丁的脚本
+
+修改：
+- assets/index-l27V6rf0.js：加入 ja 语言选项、日语核心导航/身份/入口页文本、语言切换回退、DeepSeek 按界面语言回答
+- index.html：加载 assets/ja-i18n.js
+- 404.html：统一加载 index-l27V6rf0.js，并加载 assets/ja-i18n.js
+
+Vercel 必需环境变量：
+DEEPSEEK_API_KEY=你的 DeepSeek API Key
+
+注意：
+- GitHub Pages 只能运行静态前端。日语核心菜单可以离线显示，但未命中本地词典的长段落需要 /api/translate-ja，因此完整日语翻译需部署到 Vercel。
+- Vercel 上首次进入某页面时会批量翻译尚未缓存的文本，之后保存在浏览器 localStorage，减少重复请求。
